@@ -7,7 +7,7 @@ from nltk.stem.porter import PorterStemmer
 
 
 # Download necessary NLTK resources
-nltk.download('punkt')
+nltk.download('punk')
 nltk.download('stopwords')
 
 # Instantiate the PorterStemmer
