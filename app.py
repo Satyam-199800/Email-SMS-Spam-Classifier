@@ -1,48 +1,57 @@
 import streamlit as st
 import pickle as pkl
 import string
-from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
 import os
-import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import PunktSentenceTokenizer
+from nltk.stem.porter import PorterStemmer
 
-# Get the full path to the nltk_data directory
-nltk_data_path = os.path.abspath(os.path.join(os.getcwd(), 'nltk_data'))
-nltk.data.path.append(nltk_data_path)
+# Manually load the Punkt tokenizer from the local file
+punkt_path = os.path.join(os.getcwd(), "nltk_data", "tokenizers", "punkt", "english.pickle")
+with open(punkt_path, "rb") as f:
+    punkt_tokenizer = PunktSentenceTokenizer(f.read())
 
-# Print out the current NLTK data paths
-print("NLTK data paths:", nltk.data.path)
+# Manually load stopwords
+stopwords_path = os.path.join(os.getcwd(), "nltk_data", "corpora", "stopwords")
+nltk.data.path.append(stopwords_path)
 
-# Check if the punkt tokenizer is accessible
-punkt_path = os.path.join(nltk_data_path, 'tokenizers', 'punkt')
-print("Punkt tokenizer exists:", os.path.exists(punkt_path))
-print("Contents of nltk_data/tokenizers/punkt:", os.listdir(punkt_path))
-
-
+# Instantiate the PorterStemmer
 ps = PorterStemmer()
 
+
 def transform_text(text):
+    # Convert text to lowercase
     text = text.lower()
-    text = nltk.word_tokenize(text)
+
+    # Tokenize text using the manually loaded Punkt tokenizer
+    text = punkt_tokenizer.tokenize(text)
+
     y = []
     for i in text:
         if i.isalnum():
             y.append(i)
+
     text = y[:]
     y.clear()
+
     for i in text:
         if i not in stopwords.words('english') and i not in string.punctuation:
             y.append(i)
+
     text = y[:]
     y.clear()
+
     for i in text:
         y.append(ps.stem(i))
+
     return " ".join(y)
 
 
+# Load the vectorizer and model
 tfidf = pkl.load(open('vectorizer.pkl', 'rb'))
 model = pkl.load(open('model.pkl', 'rb'))
 
+# Streamlit app title
 st.title("Email/SMS Spam Classifier")
 
 # Input field for the SMS text
