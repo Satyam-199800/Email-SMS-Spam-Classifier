@@ -1,8 +1,8 @@
 import streamlit as st
 import pickle as pkl
 import string
-from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+
 
 # Instantiate the PorterStemmer
 ps = PorterStemmer()
