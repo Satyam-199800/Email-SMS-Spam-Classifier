@@ -1,20 +1,8 @@
 import streamlit as st
 import pickle as pkl
 import string
-import os
 from nltk.corpus import stopwords
-from nltk.tokenize import PunktSentenceTokenizer
 from nltk.stem.porter import PorterStemmer
-
-# Manually load the Punkt tokenizer from the local file
-punkt_path = os.path.join(os.getcwd(), "nltk_data", "tokenizers", "punkt", "english.pickle")
-with open(punkt_path, "rb") as f:
-    punkt_tokenizer = PunktSentenceTokenizer(f.read())
-
-# Set the stopwords path and manually load stopwords from the local file
-stopwords_path = os.path.join(os.getcwd(), "nltk_data", "corpora", "stopwords", "english")
-with open(stopwords_path, "r") as f:
-    stop_words = f.read().splitlines()
 
 # Instantiate the PorterStemmer
 ps = PorterStemmer()
@@ -23,9 +11,6 @@ ps = PorterStemmer()
 def transform_text(text):
     # Convert text to lowercase
     text = text.lower()
-
-    # Tokenize text using the manually loaded Punkt tokenizer
-    text = punkt_tokenizer.tokenize(text)
 
     y = []
     for i in text:
