@@ -2,13 +2,21 @@ import streamlit as st
 import pickle as pkl
 import string
 from nltk.corpus import stopwords
-import nltk
 from nltk.stem.porter import PorterStemmer
 import os
+import nltk
 
-
-nltk_data_path = os.path.join(os.getcwd(), 'nltk_data')
+# Get the full path to the nltk_data directory
+nltk_data_path = os.path.abspath(os.path.join(os.getcwd(), 'nltk_data'))
 nltk.data.path.append(nltk_data_path)
+
+# Print out the current NLTK data paths
+print("NLTK data paths:", nltk.data.path)
+
+# Check if the punkt tokenizer is accessible
+punkt_path = os.path.join(nltk_data_path, 'tokenizers', 'punkt')
+print("Punkt tokenizer exists:", os.path.exists(punkt_path))
+print("Contents of nltk_data/tokenizers/punkt:", os.listdir(punkt_path))
 
 
 ps = PorterStemmer()
