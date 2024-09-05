@@ -11,9 +11,10 @@ punkt_path = os.path.join(os.getcwd(), "nltk_data", "tokenizers", "punkt", "engl
 with open(punkt_path, "rb") as f:
     punkt_tokenizer = PunktSentenceTokenizer(f.read())
 
-# Manually load stopwords
-stopwords_path = os.path.join(os.getcwd(), "nltk_data", "corpora", "stopwords")
-nltk.data.path.append(stopwords_path)
+# Set the stopwords path and manually load stopwords from the local file
+stopwords_path = os.path.join(os.getcwd(), "nltk_data", "corpora", "stopwords", "english")
+with open(stopwords_path, "r") as f:
+    stop_words = f.read().splitlines()
 
 # Instantiate the PorterStemmer
 ps = PorterStemmer()
@@ -35,7 +36,7 @@ def transform_text(text):
     y.clear()
 
     for i in text:
-        if i not in stopwords.words('english') and i not in string.punctuation:
+        if i not in stop_words and i not in string.punctuation:
             y.append(i)
 
     text = y[:]
