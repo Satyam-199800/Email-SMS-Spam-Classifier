@@ -1,8 +1,12 @@
 import streamlit as st
 import pickle as pkl
 import string
+import nltk
+from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+nltk.download('punkt')
+nltk.download('stopwords')
 
 # Instantiate the PorterStemmer
 ps = PorterStemmer()
@@ -21,7 +25,7 @@ def transform_text(text):
     y.clear()
 
     for i in text:
-        if i not in stop_words and i not in string.punctuation:
+        if i not in stopwords and i not in string.punctuation:
             y.append(i)
 
     text = y[:]
