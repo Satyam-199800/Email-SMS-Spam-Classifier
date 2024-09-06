@@ -17,7 +17,7 @@ ps = PorterStemmer()
 def transform_text(text):
     # Convert text to lowercase
     text = text.lower()
-    text = nltk.word_tokenize(text)
+    text = text.split()
 
     y = []
     for i in text:
