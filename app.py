@@ -8,6 +8,8 @@ from nltk.stem.porter import PorterStemmer
 nltk.download('punkt')
 nltk.download('stopwords')
 
+stop_words = set(stopwords.words('english'))
+
 # Instantiate the PorterStemmer
 ps = PorterStemmer()
 
@@ -25,7 +27,7 @@ def transform_text(text):
     y.clear()
 
     for i in text:
-        if i not in stopwords and i not in string.punctuation:
+        if i not in stop_words and i not in string.punctuation:
             y.append(i)
 
     text = y[:]
